@@ -13045,7 +13045,7 @@
   var pctEl=document.getElementById('pct'),countEl=document.getElementById('count'),fillEl=document.getElementById('fill'),statusEl=document.getElementById('status');
   var flashTimer;
   function flash(m){if(!statusEl)return;statusEl.textContent=m;clearTimeout(flashTimer);flashTimer=setTimeout(function(){statusEl.textContent="";},1800);}
-  function ids(){return boxes.filter(function(b){return b.checked;}).map(function(b){return b.dataset.id;});}
+  function ids(){return [].slice.call(document.querySelectorAll('.cb')).filter(function(b){return b.checked;}).map(function(b){return b.dataset.id;});}
   function updateProgress(){var lb=[].slice.call(document.querySelectorAll(".cb"));var c=lb.filter(function(b){return b.checked;}).length;var t=lb.length;var pct=t?Math.round(c/t*100):0;if(pctEl)pctEl.textContent=pct+"%";if(countEl)countEl.textContent=c+"/"+t;if(fillEl)fillEl.style.right=(100-pct)+"%";}
   function updatePhaseDone(){[].slice.call(document.querySelectorAll('.phase')).forEach(function(sec){var cbs=[].slice.call(sec.querySelectorAll('.cb'));var done=cbs.length&&cbs.every(function(b){return b.checked;});sec.classList.toggle('done',done);});}
   async function save(){var ok=await store.set(KEY,JSON.stringify(ids()));flash(ok?"Progression sauvegardée":"Sauvegarde indisponible ici");}
@@ -13119,7 +13119,7 @@
   var expBtn=document.getElementById('exportBtn');
   var impBtn=document.getElementById('importBtn');
   if(expBtn)expBtn.addEventListener('click',function(){
-    var payload={c:ids(),r:ratings,o:Array.from(owned),n:notes,p:prog,ch:chars};var code=btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
+    var payload={c:ids(),r:ratings,o:Array.from(owned),n:notes,p:prog,ch:chars,cu:custom};var code=btoa(unescape(encodeURIComponent(JSON.stringify(payload))));
     if(codeEl){codeEl.value=code;codeEl.focus();codeEl.select();}
     try{navigator.clipboard.writeText(code);flash("Code copié \u2014 colle-le dans une note");}
     catch(e){flash("Code affich\u00e9 ci-dessous \u2014 copie-le");}
@@ -13132,7 +13132,9 @@
       else { data=JSON.parse(decodeURIComponent(escape(atob(raw)))); }
       var arr=Array.isArray(data)?data:(data.c||[]);
       var s=new Set(arr);
-      boxes.forEach(function(b){b.checked=s.has(b.dataset.id);});if(!Array.isArray(data)&&data.r){ratings=data.r;applyRatings();saveRatings();}if(!Array.isArray(data)&&data.o){owned=new Set(data.o);applyOwned();saveOwned();}if(!Array.isArray(data)&&data.n){notes=data.n;applyNotes();saveNotes();}if(!Array.isArray(data)&&data.p){prog=data.p;applyProg();saveProg(true);refreshDash();}if(!Array.isArray(data)&&data.ch){chars=data.ch;renderChars();saveChars();}renderTiers();
+      if(!Array.isArray(data)&&data.cu){custom=data.cu;saveCustom();renderCustom();}
+      [].slice.call(document.querySelectorAll('.cb')).forEach(function(b){b.checked=s.has(b.dataset.id);});
+      custom.forEach(function(en){en.read=s.has(en.id);});if(!Array.isArray(data)&&data.cu)saveCustom();if(!Array.isArray(data)&&data.r){ratings=data.r;applyRatings();saveRatings();}if(!Array.isArray(data)&&data.o){owned=new Set(data.o);applyOwned();saveOwned();}if(!Array.isArray(data)&&data.n){notes=data.n;applyNotes();saveNotes();}if(!Array.isArray(data)&&data.p){prog=data.p;applyProg();saveProg(true);refreshDash();}if(!Array.isArray(data)&&data.ch){chars=data.ch;renderChars();saveChars();}renderTiers();
       updateProgress();updatePhaseDone();save();
       flash("Progression restaur\u00e9e ("+arr.length+" lus)");
     }catch(e){flash("Code invalide \u2014 recopie-le en entier");}
@@ -13339,7 +13341,7 @@
     var b=document.getElementById('exportBtn');if(!b)return;
     var dl=document.createElement('button');dl.className='tbtn';dl.textContent='\u2193 Fichier';
     dl.addEventListener('click',function(){
-      var data={c:ids(),r:ratings,o:Array.from(owned),n:notes,p:prog,ch:chars};
+      var data={c:ids(),r:ratings,o:Array.from(owned),n:notes,p:prog,ch:chars,cu:custom};
       var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
       var a=document.createElement('a');a.href=URL.createObjectURL(blob);
       a.download='marvel-tracker-'+new Date().toISOString().slice(0,10)+'.json';
@@ -13456,7 +13458,7 @@
     store.set(GHKEY,JSON.stringify(gh));
     syncMsg('Enregistré. Tu peux utiliser Envoyer / Récupérer.');flash('Configuration GitHub enregistrée');
   });
-  function ghPayload(){return {c:ids(),r:ratings,o:Array.from(owned),n:notes,p:prog,ch:chars,date:new Date().toISOString()};}
+  function ghPayload(){return {c:ids(),r:ratings,o:Array.from(owned),n:notes,p:prog,ch:chars,cu:custom,date:new Date().toISOString()};}
   function ghURL(){return 'https://api.github.com/repos/'+gh.owner+'/'+gh.repo+'/contents/'+gh.path;}
   function ghHeaders(){return {'Authorization':'Bearer '+gh.token,'Accept':'application/vnd.github+json'};}
   async function ghGetSha(){
