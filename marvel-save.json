@@ -1,15 +1,79 @@
 {
-  "c": [],
-  "r": {},
-  "o": [],
+  "c": [
+    "s6",
+    "z6",
+    "b6",
+    "c3",
+    "c2",
+    "v19",
+    "v5",
+    "v11"
+  ],
+  "r": {
+    "z6": 5,
+    "b6": 4,
+    "c3": 5,
+    "c2": 3,
+    "v19": 2,
+    "v5": 3,
+    "v11": 4
+  },
+  "o": [
+    "s6"
+  ],
   "n": {
     "s1": {
       "d": "2026-09-15"
+    },
+    "s6": {
+      "d": "2026-09-15",
+      "t": "Une merveille, j’ai adoré"
+    },
+    "z6": {
+      "d": "2026-09-15",
+      "t": "Un peu ancien surtout dans les dessins, mais superbe histoire "
+    },
+    "b6": {
+      "d": "2026-09-15",
+      "t": "Sympa, super dessin et brutal "
+    },
+    "c3": {
+      "d": "2026-09-15",
+      "t": "Première relecture, j’ai ADORÉ top 3 pour le moment "
+    },
+    "c2": {
+      "d": "2026-09-15",
+      "t": "On voit bien l’histoire mais pas vraiment le début de ses pouvoirs "
+    },
+    "v19": {
+      "d": "2026-09-15",
+      "t": "Pas fan du tout des dessins mais histoire sympa"
+    },
+    "v5": {
+      "d": "2026-09-15",
+      "t": "Pareil que Magneto Testament, intéressant pour voir pourquoi il devient ce qu’il est mais limité"
+    },
+    "v11": {
+      "d": "2026-09-15",
+      "t": "Je ne le connaissais pas beaucoup mais au top, c’est pas un mutant !!!"
+    },
+    "c1789506094488": {
+      "d": "2026-09-15",
+      "t": "J’ai adoré franchement 20/20 le meilleur perso de Marvel, snif le chien "
     }
   },
   "p": {
-    "s1": 0
+    "s1": 0,
+    "s6": 6,
+    "z6": 0,
+    "b6": 6,
+    "c3": 6,
+    "c2": 5,
+    "x48": 1,
+    "v19": 5,
+    "v5": 5,
+    "v11": 5
   },
   "ch": [],
-  "date": "2026-09-15T20:48:38.468Z"
+  "date": "2026-09-15T21:02:20.671Z"
 }
