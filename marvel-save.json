@@ -8,7 +8,7 @@
     "v19",
     "v5",
     "v11",
-    "c1789506790047"
+    "c1789507691359"
   ],
   "r": {
     "z6": 5,
@@ -64,6 +64,13 @@
     },
     "c1789506790047": {
       "d": "2026-09-15"
+    },
+    "c1789507592944": {
+      "d": "2026-09-15"
+    },
+    "c1789507691359": {
+      "d": "2026-09-15",
+      "t": "Magnifique, le meilleur perso vraiment "
     }
   },
   "p": {
@@ -76,20 +83,25 @@
     "x48": 1,
     "v19": 5,
     "v5": 5,
-    "v11": 5
+    "v11": 5,
+    "c1789506790047": 4,
+    "c1789507592944": 0,
+    "c1789507691359": 4
   },
   "ch": [],
   "cu": [
     {
-      "id": "c1789506790047",
+      "id": "c1789507691359",
       "t": "The Sentry",
-      "m": "Jenkins · 2026",
+      "m": "P. Jenkins · 2026",
       "iss": "#1-4",
+      "hrs": 0,
+      "desc": "Sentry qui essaye de trouver une solution pour se séparer du Void, mais il perd son chien.",
       "cat": "hero",
       "read": true,
       "rating": 5,
       "owned": false
     }
   ],
-  "date": "2026-09-15T21:13:17.374Z"
+  "date": "2026-09-15T21:28:44.044Z"
 }
