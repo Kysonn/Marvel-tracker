@@ -12967,6 +12967,8 @@
       <input id="af-author" class="afin" placeholder="Auteur">
       <input id="af-year" class="afin afsmall" placeholder="Année">
       <input id="af-iss" class="afin" placeholder="Numéros (ex. #1-6)">
+      <input id="af-hours" class="afin afsmall" placeholder="Heures" inputmode="decimal">
+      <input id="af-desc" class="afin" placeholder="Description (optionnel)">
       <select id="af-cat" class="afin afsel">
         <option value="hero">Héros</option>
         <option value="villain">Villain</option>
@@ -13085,11 +13087,13 @@
       el.innerHTML='<input type="checkbox" class="cb" data-id="'+entry.id+'"><span class="box">'+CHK+'</span>'
         +'<div class="it-body"><div class="it-title">'+cesc(entry.t)+'</div>'
         +'<div class="it-meta">'+cesc(entry.m)+'</div>'
-        +(entry.iss?'<div class="it-issues">'+cesc(entry.iss)+'</div>':'')
+        +((entry.iss||entry.hrs)?'<div class="it-issues">'+cesc(entry.iss||'')+(entry.hrs?((entry.iss?' \u00b7 ':'')+'~'+entry.hrs+' h'):'')+'</div>':'')
+        +(entry.desc?'<div class="it-note">'+cesc(entry.desc)+'</div>':'')
         +'<div class="tags"><span class="tag uni-616">Terre-616</span><span class="tag solid">'+catLabelC(entry.cat)+'</span><span class="tag">Mon ajout</span></div>'
         +'<div class="stars" data-id="'+entry.id+'" data-rating="'+(entry.rating||0)+'">'+stars+'<span class="star-clear" title="Effacer la note">✕</span></div>'
         +'<div class="ownrow"><span class="owned-toggle" data-id="'+entry.id+'" data-owned="'+(entry.owned?"1":"0")+'"><span class="obox"></span>Acheté</span></div>'
         +'<div><span class="del-custom">Supprimer</span></div></div>';
+      if(entry.hrs){el._issues=Math.max(1,Math.round(entry.hrs*5));el._parsed=true;el._search=(entry.t+' '+entry.m+' '+(entry.desc||'')).toLowerCase();}
       var cb=el.querySelector('.cb');cb.checked=!!entry.read;
       var st=el.querySelector('.stars');paint(st);
       cb.addEventListener('change',function(){entry.read=cb.checked;saveCustom();updateProgress();if(cb.checked){var nid=el.dataset.id;notes[nid]=notes[nid]||{};if(!notes[nid].d){notes[nid].d=new Date().toISOString().slice(0,10);saveNotes();if(el._noteEls){el._noteEls.dt.value=notes[nid].d;el._noteEls.ind();}}}});
@@ -13099,18 +13103,20 @@
       el.querySelector('.del-custom').addEventListener('click',function(e){e.preventDefault();e.stopPropagation();custom=custom.filter(function(x){return x.id!==entry.id;});saveCustom();renderCustom();updateProgress();flash("Ajout supprimé");});
       customList.appendChild(el);addNoteUI(el);
     });
-    updateProgress();applyFilter();applyNotes();
+    allItems().forEach(addProgUI);applyProg();updateProgress();applyFilter();applyNotes();refreshDash();
   }
   var afAdd=document.getElementById('af-add');
   if(afAdd)afAdd.addEventListener('click',function(){
     var g=function(id){var e=document.getElementById(id);return e?(e.value||'').trim():'';};
     var t=g('af-title');if(!t){flash("Ajoute au moins un titre");return;}
     var au=g('af-author'),yr=g('af-year'),iss=g('af-iss');
+    var hrs=parseFloat((g('af-hours')||'').replace(',','.'));if(isNaN(hrs)||hrs<0)hrs=0;
+    var desc=g('af-desc');
     var cat=(document.getElementById('af-cat')||{}).value||'hero';
     var m=au+(au&&yr?' · ':'')+yr;if(!m)m='—';
-    custom.push({id:'c'+Date.now(),t:t,m:m,iss:iss,cat:cat,read:false,rating:0,owned:false});
+    custom.push({id:'c'+Date.now(),t:t,m:m,iss:iss,hrs:hrs,desc:desc,cat:cat,read:false,rating:0,owned:false});
     saveCustom();renderCustom();
-    ['af-title','af-author','af-year','af-iss'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
+    ['af-title','af-author','af-year','af-iss','af-hours','af-desc'].forEach(function(id){var e=document.getElementById(id);if(e)e.value='';});
     flash("Ajouté à ta liste");
   });
   var reset=document.getElementById('reset');
