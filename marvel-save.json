@@ -1,6 +1,7 @@
 {
   "c": [
     "x128",
+    "b3",
     "z6",
     "b6",
     "v19",
@@ -19,7 +20,8 @@
     "v19": 2,
     "v5": 3,
     "v11": 4,
-    "x128": 5
+    "x128": 5,
+    "b3": 4
   },
   "o": [
     "s6"
@@ -77,6 +79,10 @@
     "x128": {
       "d": "2026-09-20",
       "t": "Top, superbe histoire"
+    },
+    "b3": {
+      "d": "2026-09-21",
+      "t": "Hype réelle, une histoire exceptionnelle mais la fin je n’ai pas trop aimé je trouve que ça se retourne trop simplement sur Kingpin"
     }
   },
   "p": {
@@ -95,7 +101,7 @@
     "c1789507691359": 4,
     "x367": 8,
     "x128": 5,
-    "b3": 3
+    "b3": 7
   },
   "ch": [],
   "cu": [
@@ -112,5 +118,5 @@
       "owned": false
     }
   ],
-  "date": "2026-09-20T20:56:43.323Z"
+  "date": "2026-09-21T18:15:06.632Z"
 }
